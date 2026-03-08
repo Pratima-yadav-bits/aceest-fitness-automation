@@ -1,5 +1,6 @@
-from flask import Flask, jsonify, request
+"""ACEest Fitness & Gym Flask API application"""
 import sqlite3
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -8,6 +9,7 @@ DB = "aceest_fitness.db"
 # ---------- DATABASE HELPER ----------
 
 def get_db():
+    """Return a SQLite3 connection with row factory as dict"""
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
     return conn
@@ -65,10 +67,12 @@ programs = {
 
 @app.route("/programs")
 def get_programs():
+    """Return list of available programs"""
     return jsonify(programs)
 
 @app.route("/program/<name>")
 def get_program(name):
+    """Return details of a specific program by name"""
     program = programs.get(name.lower())
     if not program:
         return jsonify({"error": "Program not found"}), 404
@@ -78,6 +82,7 @@ def get_program(name):
 
 @app.route("/clients")
 def get_clients():
+    """Return list of all clients in database"""
     conn = get_db()
     cur = conn.cursor()
     cur.execute("SELECT * FROM clients")
@@ -88,6 +93,7 @@ def get_clients():
 
 @app.route("/add-client", methods=["POST"])
 def add_client():
+    """Add a new client to the database"""
     data = request.json
     name = data.get("name")
     age = data.get("age")
@@ -109,13 +115,14 @@ def add_client():
 
 @app.route("/bmi")
 def bmi():
+    """Calculate BMI based on height (cm) and weight (kg)"""
     try:
         height = float(request.args.get("height"))
         weight = float(request.args.get("weight"))
         h = height / 100
         bmi_value = weight / (h * h)
         return jsonify({"BMI": round(bmi_value, 2)})
-    except:
+    except Exception as e:
         return jsonify({"error": "Please provide valid height and weight"}), 400
 
 # ---------- RUN APP ----------
