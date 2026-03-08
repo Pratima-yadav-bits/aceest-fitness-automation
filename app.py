@@ -37,6 +37,7 @@ init_db()
 
 @app.route("/")
 def home():
+    """Return welcome message and available API endpoints"""
     return jsonify({
         "message": "Welcome to ACEest Fitness & Gym API",
         "endpoints": [
@@ -122,7 +123,7 @@ def bmi():
         h = height / 100
         bmi_value = weight / (h * h)
         return jsonify({"BMI": round(bmi_value, 2)})
-    except Exception as e:
+    except (TypeError, ValueError):
         return jsonify({"error": "Please provide valid height and weight"}), 400
 
 # ---------- RUN APP ----------
