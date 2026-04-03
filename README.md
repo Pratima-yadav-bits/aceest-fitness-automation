@@ -47,6 +47,8 @@ This repository contains a **Flask-based REST API** for a fitness and gym applic
 
 The API will be available at: http://127.0.0.1:5000/
 
+---
+
 ## Docker Setup
 
 1. **Build Docker image**
@@ -58,6 +60,8 @@ The API will be available at: http://127.0.0.1:5000/
 
 Access the API at http://localhost:5000/
 
+---
+
 ## Running Tests Manually
 1. **Navigate to tests folder**
     ```bash
@@ -66,6 +70,8 @@ Access the API at http://localhost:5000/
     ```bash
     pytest test_app.py
 This will execute all API endpoint tests and display results.
+
+---
 
 ## CI/CD Pipeline Overview
 
@@ -92,6 +98,8 @@ Stages executed:
 | `/add-client`     | POST   | Add a new client to the database       |
 | `/bmi`            | GET    | Calculate BMI based on height & weight |
 
+---
+
 ## VM Deployment Steps
 The application is deployed on a virtual machine (VM) environment using Docker and Python.
 1. The VM is accessed and the project directory is opened.
@@ -102,10 +110,14 @@ The application is deployed on a virtual machine (VM) environment using Docker a
 6. The application endpoints are tested using terminal-based requests.
 7. All functionalities are validated within the VM environment.
 8. Unit test cases are executed using Pytest to confirm application stability.
+
 This process ensures that the application is successfully deployed and validated inside the VM.
+
+---
 
 ## Notes
 Ensure Python 3.10+ is installed for local execution.
 Docker is required for containerized testing.
 Jenkins and GitHub Actions pipelines provide automated validation, so manual build steps are optional once configured.
 
+---
