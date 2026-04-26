@@ -53,13 +53,15 @@ pipeline {
         stage('SonarQube Analysis') {
 			steps {
 				withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-					bat """
-					sonar-scanner ^
+					bat '''
+					docker run --rm ^
+					-v %cd%:/usr/src ^
+					sonarsource/sonar-scanner-cli ^
 					-Dsonar.projectKey=aceest ^
-					-Dsonar.sources=. ^
-					-Dsonar.host.url=http://localhost:9000 ^
+					-Dsonar.sources=/usr/src ^
+					-Dsonar.host.url=http://host.docker.internal:9000 ^
 					-Dsonar.login=%SONAR_TOKEN%
-					"""
+					'''
 				}
 			}
 		}
