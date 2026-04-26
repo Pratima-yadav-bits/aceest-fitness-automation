@@ -18,17 +18,15 @@ pipeline {
             }
         }
 
-        stage('Detect Version') {
-            steps {
-                script {
-                    bat 'git fetch --tags'
-                    def tag = bat(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
-                    env.VERSION = tag ?: "latest"
-                    echo "Version: ${env.VERSION}"
-                }
-            }
-        }
-
+       stage('Detect Version') {
+			steps {
+				script {
+					env.VERSION = "v2"
+					echo "Version: ${env.VERSION}"
+				}
+			}
+		}
+		
         stage('Install Dependencies') {
 			steps {
 				bat '''
