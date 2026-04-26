@@ -40,7 +40,7 @@ pipeline {
         
 		stage('Run Tests (Pytest)') {
 			steps {
-				bat 'py -m pytest test_app.py --junitxml=report.xml'
+				bat 'py -m pytest --junitxml=report.xml'
 			}
 		}
 
