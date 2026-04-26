@@ -51,20 +51,18 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                        bat '''
-                        sonar-scanner ^
-                        -Dsonar.projectKey=aceest ^
-                        -Dsonar.sources=. ^
-                        -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.login=%SONAR_TOKEN%
-                        '''
-                    }
-                }
-            }
-        }
+			steps {
+				withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+					bat '''
+					sonar-scanner ^
+					-Dsonar.projectKey=aceest ^
+					-Dsonar.sources=. ^
+					-Dsonar.host.url=http://localhost:9000 ^
+					-Dsonar.login=%SONAR_TOKEN%
+					'''
+				}
+			}
+		}
 
         stage('Build Docker Image') {
             steps {
