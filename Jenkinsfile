@@ -13,8 +13,11 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git branch: 'v1',
-                    url: 'https://github.com/Pratima-yadav-bits/aceest-fitness-automation'
+					checkout([$class: 'GitSCM',
+					branches: [[name: 'refs/tags/v1']],
+					userRemoteConfigs: [[url: 'https://github.com/Pratima-yadav-bits/aceest-fitness-automation']]
+					extensions: [[$class: 'CleanBeforeCheckout']]
+				])
             }
         }
 
