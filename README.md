@@ -6,9 +6,11 @@ This repository contains a **Flask-based REST API** for a fitness and gym applic
 
 ## Repository Contents
 
-- **Source Code:** `app.py`, `requirements.txt`  
+- **Source Code:** `app.py`, `requirements.txt` , `aceest_fitness.db`
 - **Test Suite:** `tests/test_app.py`  
-- **Infrastructure as Code:** `Dockerfile`, `.github/workflows/main.yml`  
+- **Containerization** `dockerfile` 
+- **CI/CD** `Jenkinsfile`, `.github/workflows/main.yml`
+- **Kubernetes** `k8s/ `   
 - **Documentation:** `README.md`
 
 ---
