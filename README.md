@@ -100,24 +100,158 @@ Stages executed:
 
 ---
 
-## VM Deployment Steps
-The application is deployed on a virtual machine (VM) environment using Docker and Python.
-1. The VM is accessed and the project directory is opened.
-2. The system environment is verified, ensuring Python and pip are available.
-3. Required dependencies such as Flask and other packages are installed.
-4. The application is containerized and executed using Docker.
-5. The running container is verified to ensure the application is active.
-6. The application endpoints are tested using terminal-based requests.
-7. All functionalities are validated within the VM environment.
-8. Unit test cases are executed using Pytest to confirm application stability.
 
-This process ensures that the application is successfully deployed and validated inside the VM.
+## Containerization with Docker & Docker Hub
+The Flask application is containerized using Docker by creating images that include application code and dependencies. These images are versioned (v1, v2) and stored in Docker Hub for easy access and deployment.
+
+### Implementation
+
+1. **Build Docker Image (v1 / v2)**
+
+   ```bash
+   docker build -t aceest:v1 .
+   docker build -t aceest:v2 .
+	
+2. **Login to Docker Hub**
+	
+	```bash
+	docker login
+	
+3. **Tag Image for Docker Hub**
+	
+	```bash
+	docker tag aceest:v1 pratimayadav289/aceest:v1
+	docker tag aceest:v2 pratimayadav289/aceest:v2
+	
+4. **Push Image to Docker Hub**
+	
+	```bash
+	docker push pratimayadav289/aceest:v1
+	docker push  pratimayadav289/aceest:v2
+
+### Outcome
+- Images stored on Docker Hub
+- Version control using tags (v1, v2)
+- Easy deployment in Kubernetes
 
 ---
 
-## Notes
-Ensure Python 3.10+ is installed for local execution.
-Docker is required for containerized testing.
-Jenkins and GitHub Actions pipelines provide automated validation, so manual build steps are optional once configured.
+## Continuous Integration with Jenkins
+Jenkins is used as the CI server to automate the build process. A Jenkinsfile defines pipeline stages and triggers builds automatically when code changes are detected in the Git repository.
+
+### Implementation
+1. Configure Jenkins Job
+2. Connect GitHub repository
+3. Enable SCM polling
+4. Jenkinsfile (Pipeline Trigger)
+
+### Outcome
+- Automatic pipeline trigger on code push
+- Continuous build execution
+- Faster development cycle
+
+---
+
+## SonarQube Integration
+SonarQube is integrated into the Jenkins pipeline to perform static code analysis and generate quality reports.
+
+### Implementation
+1. Run SonarQube (Docker)
+2. Configure SonarQube in Jenkins
+3. Install SonarQube plugin
+4. Add SonarQube server in Jenkins config
+5. Add SonarQube Stage in Jenkinsfile
+
+### Outcome
+
+- Automatic code quality analysis
+- Detection of bugs, vulnerabilities, code smells
+- Report generation in SonarQube dashboard
+
+---
+
+## Continuous Delivery and Deployment Strategies
+This project demonstrates deployment of a Flask-based application using Kubernetes with Minikube. It showcases modern deployment strategies to ensure high availability and zero downtime.
+
+### Deployment strategies implemented:
+
+- **Blue-Green Deployment**
+- **Canary Deployment**
+- **Shadow Deployment**
+
+### Minikube Cluster Setup
+1. Start the Minikube cluster with required CPU and memory configuration.
+2. Verify that the cluster is running successfully.
+3. Confirm that Kubernetes node is available and ready.
+
+### Deployment of Application (v1 & v2)
+1. Build the Docker image for both the version (v1 & v2) of the application.
+2. Load the image into the Minikube environment.
+3. Deploy the application using Kubernetes deployment configuration.
+4. Expose the application using a Kubernetes service.
+5. Verify that pods and services are running successfully.
+
+### Access Application
+1. Expose the Kubernetes service externally using Minikube.
+2. Open the application in a browser using the generated URL.
+3. Verify that the application is working correctly.
+
+---
+
+### Blue-Green Deployment
+Blue-Green deployment uses two identical environments:
+- Blue (v1) - Live production environment
+- Green (v2) - New version
+Only one version serves user traffic at a time.
+
+### Implementation
+1. Deploy both v1 and v2 versions in the cluster.
+2. Initially, route all traffic to v1 (Blue environment).
+3. Validate the v2 application independently.
+4. Update the service configuration to point to v2.
+5. Verify that traffic is successfully switched to v2
+
+### Result
+1. Zero downtime deployment achieved
+2. Instant rollback possible by switching back to v1
+
+---
+
+### Canary Deployment
+Canary deployment gradually shifts traffic from the old version to the new version.
+
+### Implementation
+
+1. Deploy both v1 and v2 applications.
+2. Configure v1 with higher replicas and v2 with fewer replicas.
+3. Allow both versions to receive traffic simultaneously.
+4. Monitor application performance and behavior.
+5. Gradually increase traffic to v2 based on stability.
+
+### Result
+1. Controlled release of new version
+2. Reduced deployment risk
+3. Better monitoring and validation
+
+---
+
+### Shadow Deployment
+Shadow deployment runs the new version in parallel without exposing it to users.
+
+### Implementation
+1. Deploy both v1 and v2 applications.
+2. Expose only the v1 service to users.
+3. Keep v2 running in the background without traffic.
+4. Validate v2 internally without affecting users.
+
+### Result
+1. Safe testing of new version
+2. No impact on production users
+
+---
+
+## Conclusion
+
+This project demonstrates how a well-designed CI/CD pipeline can automate the entire software delivery process, from code integration to deployment. By integrating Jenkins, Docker, and Kubernetes, the system achieves high efficiency, reliability, and scalability. The use of advanced deployment strategies further enhances the ability to release updates safely and efficiently.
 
 ---

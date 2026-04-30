@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: aceest-service-v1   # keep same service name you are testing
+spec:
+  selector:
+    app: aceest
+    version: v2   # 🔥 GREEN switch
+  ports:
+    - port: 80
+      targetPort: 5000   # IMPORTANT (your actual container port)
